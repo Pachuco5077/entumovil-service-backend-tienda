@@ -26,7 +26,7 @@ import cu.entumovil.ecommerce.repository.AplicacionRepository;
 @RestController
 @RefreshScope
 @RequestMapping("/api/v1/ecommerce")
-//@CrossOrigin("http://localhost:2999/")
+@CrossOrigin("http://localhost:2999/")
 public class AplicacionController {
 	@Autowired 
 	private AplicacionRepository aplicacionRepository;
