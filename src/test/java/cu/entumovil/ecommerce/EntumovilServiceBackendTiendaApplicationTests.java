@@ -1,9 +1,11 @@
 package cu.entumovil.ecommerce;
 
-//import org.junit.jupiter.api.Test;
-//import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.function.context.test.FunctionalSpringBootTest;
 
-//@SpringBootTest
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@FunctionalSpringBootTest
 class EntumovilServiceBackendTiendaApplicationTests {
 
 	//@Test
