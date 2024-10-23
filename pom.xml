@@ -21,17 +21,43 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
+		<!-- ### DB MySQL
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		-->
+		
+		<!-- ++++++++++ DATABASE ++++++++ -->
+		<!-- Persistencia a bases de datos-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- Base de datos embebida-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- ++++++++++ VALIDATION ++++++++ -->
+		<dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>1.4.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -44,51 +70,54 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Eureka client -->
+		<!-- Eureka client
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
+		</dependency> -->
 
-		<!-- Spring Config client -->
+		<!-- Spring Config client 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-client</artifactId>
-		</dependency>
+		</dependency>-->
 
-		<!-- Spring Cloud Starter Bootstrap (para que busque el config server) -->
+		<!-- Spring Cloud Starter Bootstrap (para que busque el config server) 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
-		</dependency>
+		</dependency>-->
 
-		<!-- Starter Actuator -->
+		<!-- Starter Actuator 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
+		</dependency>-->
 
-		<!-- Starter Vault -->
+		<!-- Starter Vault 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-vault-config</artifactId>
-		</dependency>
+		</dependency>-->
 		
-		<!-- Starter Bus AMQP -->
+		<!-- Starter Bus AMQP
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
     		<artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		<!-- Documentacion con Swagger -->
 		<dependency>
-  			<groupId>io.springfox</groupId>
-    		<artifactId>springfox-boot-starter</artifactId>
-    		<version>3.0.0</version>
+  			<groupId>org.springdoc</groupId>
+  			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+  			<version>2.2.0</version>
 		</dependency>
-
 		
-
+	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -117,9 +146,132 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>		
-		   </configuration>
+		   		</configuration>
+			</plugin>
+		
+		<!-- Plugin para ejecutar comandos en línea de comandos 
+        	<plugin>
+            	<groupId>org.codehaus.mojo</groupId>
+	            <artifactId>exec-maven-plugin</artifactId>
+    	        <version>3.0.0</version>
+        	    <executions>
+            	    <execution>
+                	    <id>clone-frontend-repo</id>
+                    	<phase>generate-resources</phase>
+	                    <goals>
+    	                    <goal>exec</goal>
+        	            </goals>
+            	        <configuration>
+                	        <executable>git</executable>
+                    	    <arguments>
+                        	    <argument>clone</argument>
+                            	<argument>https://github.com/Pachuco5077/entumovil-service-frontend-ecommerce.git</argument>
+	                            <argument>/frontend</argument>
+    	                    </arguments>
+        	            </configuration>
+            	    </execution>
+            	    <execution>
+                    <id>install-node-and-npm</id>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <executable>bash</executable>
+                        <arguments>
+                            <argument>-c</argument>
+                            <argument>
+                                curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &amp;&amp; sudo apt-get install -y nodejs
+                            </argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>copy-frontend-files</id>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <executable>bash</executable>
+                        <arguments>
+                            <argument>-c</argument>
+                            <argument>cp -r frontend/* ${project.basedir}/frontend</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+	    	    </executions>
+			</plugin>-->
+		
+		
+      		<!-- Plugin para construir la aplicación React -->
+        	<plugin>
+    			<groupId>com.github.eirslett</groupId>
+    			<artifactId>frontend-maven-plugin</artifactId>
+    			<version>1.15.1</version>
+    			<executions>
+				<!-- -->
+					 <execution>
+                    	<id>install node and npm</id>
+                    	<goals>
+                        	<goal>install-node-and-npm</goal>
+	                    </goals>
+    	                <configuration>
+							<!-- <workingDirectory>frontend</workingDirectory> -->
+							<workingDirectory>D:\++++WORK+++\Proyectos\API-Payment-EnTuMovil\Servicios\entumovil-service-frontend-ecommerce</workingDirectory>
+                			<nodeVersion>v18.15.0</nodeVersion>
+            	        </configuration>
+           		    </execution>
+                	<execution>
+                    	<id>npm install</id>
+	                    <goals>
+    	                    <goal>npm</goal>
+        	            </goals>
+            	        <configuration>
+                	        <!-- <workingDirectory>frontend</workingDirectory> -->
+                	        <workingDirectory>D:\++++WORK+++\Proyectos\API-Payment-EnTuMovil\Servicios\entumovil-service-frontend-ecommerce</workingDirectory>
+                			<arguments>install</arguments>
+	                    </configuration>
+    	            </execution>
+					
+        			<execution>
+		        	    <id>npm run build</id>
+        			    <goals>
+                			<goal>npm</goal>
+		        	    </goals>
+        			    <configuration>
+                			<!--<workingDirectory>frontend</workingDirectory> -->
+                			<workingDirectory>D:\++++WORK+++\Proyectos\API-Payment-EnTuMovil\Servicios\entumovil-service-frontend-ecommerce</workingDirectory>
+                			<arguments>run build</arguments>
+         				</configuration>
+			        </execution>
+				</executions>
+			</plugin>
+    	   
+	   		<!-- Plugin para copiar el build de React a la carpeta static -->
+        	<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+    	        <artifactId>maven-resources-plugin</artifactId>
+        	    <version>3.2.0</version>
+            	<executions>
+	                <execution>
+    	                <id>copy-react-build</id>
+        	            <phase>prepare-package</phase> <!-- O empaquetar -->
+            	        <goals>
+                	        <goal>copy-resources</goal>
+                    	</goals>
+	                    <configuration>
+    	                    <outputDirectory>${project.build.directory}/classes/static</outputDirectory> <!-- Ruta destino -->
+        	                <resources>
+            	                <resource>
+                	                <directory>frontend/build</directory> <!-- Carpeta de build de React -->
+                    	            <filtering>false</filtering>
+                        	    </resource>
+                        	</resources>
+	                    </configuration>
+    	            </execution>
+        	    </executions>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

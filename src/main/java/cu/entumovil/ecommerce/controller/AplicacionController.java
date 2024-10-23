@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+//import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +24,7 @@ import cu.entumovil.ecommerce.model.Aplicacion;
 import cu.entumovil.ecommerce.repository.AplicacionRepository;
 
 @RestController
-@RefreshScope
+//@RefreshScope
 @RequestMapping("/ecommerce")
 @CrossOrigin("http://localhost:2999/")
 public class AplicacionController {
