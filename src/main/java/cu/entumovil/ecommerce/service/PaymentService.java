@@ -41,24 +41,16 @@ public class PaymentService {
 		paymentMap.put("urlretorno", payment.getUrlretorno());
 		paymentMap.put("errorUrl", payment.getErrorUrl());
 
-		
 		String url = "http://localhost:8091/checkout/newPay";
-		//String authHeader = "Bearer " + token;
-		//HttpHeaders headers = new HttpHeaders();
-		//headers.set("Authorization", authHeader);
-		//headers.set("Accept", "application/json");
-
+		
 		HttpResponse<String> response = Unirest.post(url)
-				//.header("Authorization", authHeader)
 				.header("Content-Type", "application/json")
-				//.header("Accept", "application/json")
 				.body(new Gson().toJson(paymentMap))
 				.asString();
 
 		System.out.println(" ......response: " + response.getBody().toString());
 
 		PaymentResponse conv = new Gson().fromJson(response.getBody(), PaymentResponse.class);
-		//ResponseEntity.status(HttpStatus.FOUND).location(URI.create( conv.getShortUrl())).build();
 		return conv;
 	}
 

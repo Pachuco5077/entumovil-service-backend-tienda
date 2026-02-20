@@ -1,5 +1,7 @@
 package cu.entumovil.ecommerce.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,19 +21,21 @@ import lombok.AllArgsConstructor;
 //@RefreshScope
 @RequestMapping("/ecommerce")
 @AllArgsConstructor
-@CrossOrigin(origins = {"http://localhost:2999/"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000/"}, allowCredentials = "true")
 public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
+	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
 	@PostMapping("/newPay")
 	public PaymentResponse createPaymentLink(@RequestBody Payment payment) throws UnirestException{
 		PaymentResponse paymentResponse = new PaymentResponse();
 		try {
-			paymentService.save(payment);
+			logger.info("* Iniciando intento de pago.");
 			paymentResponse = paymentService.newPayment(payment);
+			paymentService.save(payment);
 		} catch (Exception e) {
-			System.out.println(" *-*-*-* Autenticando en la pasarela de pagos: " + e.getMessage());
+			logger.error("* Error al procesar intento de pago en el servicio Checkout. {}", e.getMessage());
 		}	
 		return paymentResponse;
 	}
